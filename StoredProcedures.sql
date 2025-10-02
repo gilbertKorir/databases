@@ -22,7 +22,6 @@ CREATE OR REPLACE PROCEDURE sp_updateStudentgrade(
 	p_student_id INT,
 	p_grade TEXT
 )
-
 LANGUAGE plpgsql
 AS $$
 BEGIN
@@ -49,7 +48,7 @@ $$;
 CALL sp_addNewstudent('James Maiyo', 26, 'D');
 SELECT * FROM students;
 
--- SP to add new students 
+-- SP to delete students 
 CREATE OR REPLACE PROCEDURE sp_deleteStudent(
 	p_student_id INT
 )
@@ -79,6 +78,22 @@ $$;
 
 CALL sp_enrollStudent(20, 5, 'SEM 4');
 SELECT * FROM enrollment;
+
+-- SP to remove a student from acourse
+CREATE OR REPLACE PROCEDURE sp_removeEnrollments(
+	p_student_id INT,
+	p_course_id INT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN 
+	DELETE FROM enrollment WHERE student_id = p_student_id
+	AND course_id = p_course_id;
+END;
+$$;
+
+SELECT * FROM enrollment
+CALL sp_removeEnrollments(8,6)
 
 
 
